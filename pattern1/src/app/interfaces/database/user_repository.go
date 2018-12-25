@@ -1,6 +1,6 @@
-package databse
+package database
 
-import "app/domain"
+import "github.com/ytanto/go-clean-architecture/pattern1/src/app/domain"
 
 type UserRepository struct {
 	SqlHandler
@@ -52,13 +52,11 @@ func (repo *UserRepository) FindAll() (users domain.Users, err error) {
 		return
 	}
 
-	var users domain.Users
-
 	for rows.Next() {
 		var id int
-		var fitstName string
+		var firstName string
 		var lastName string
-		if err = row.Scan(&id, &fitstName, &lastName); err != nil {
+		if err := rows.Scan(&id, &firstName, &lastName); err != nil {
 			continue
 		}
 

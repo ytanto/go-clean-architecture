@@ -1,9 +1,9 @@
 package infrastructure
 
 import (
-	gin "gopkg.in/gin-gonic/gin.v1"
+	gin "github.com/gin-gonic/gin"
 
-	"app/interfaces/controllers"
+	"github.com/ytanto/go-clean-architecture/pattern1/src/app/interfaces/controllers"
 )
 
 var Router *gin.Engin
