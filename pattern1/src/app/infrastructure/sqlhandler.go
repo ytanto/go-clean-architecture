@@ -20,7 +20,7 @@ func NewSqlHandler() database.SqlHandler {
 	return sqlHandler
 }
 
-func (handler *SqlHandler) Execute(statement string, args ...interface{}) (databse.Result, error) {
+func (handler *SqlHandler) Execute(statement string, args ...interface{}) (database.Result, error) {
 	res := SqlResult{}
 	result, err := handler.Conn.Exec(statement, args...)
 	if err != nil {
@@ -30,7 +30,7 @@ func (handler *SqlHandler) Execute(statement string, args ...interface{}) (datab
 	return res, nil
 }
 
-func (handler *SqlHandler) Query(statement string, args ...interface{}) (databse.Row, error) {
+func (handler *SqlHandler) Query(statement string, args ...interface{}) (database.Row, error) {
 	rows, err := handler.Conn.Query(statement, args...)
 	if err != nil {
 		return new(SqlRow), err

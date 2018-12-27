@@ -29,7 +29,7 @@ func (controller *UserController) Create(c Context) {
 		c.JSON(500, err)
 		return
 	}
-	c.JSON(201)
+	c.JSON(201, nil)
 }
 
 func (controller *UserController) Index(c Context) {

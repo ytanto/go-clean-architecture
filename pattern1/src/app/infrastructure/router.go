@@ -6,7 +6,7 @@ import (
 	"github.com/ytanto/go-clean-architecture/pattern1/src/app/interfaces/controllers"
 )
 
-var Router *gin.Engin
+var Router *gin.Engine
 
 func init() {
 	router := gin.Default()
