@@ -1,0 +1,25 @@
+@startuml
+
+actor User
+participant router as router <<infrastructure>>
+participant user_controller as user_controller <<interface/controller>>
+participant user as user <<domain>>
+participant user_interactor as user_interactor <<usecase>>
+participant user_repository as user_repository <<interface/database>>
+participant sqlHandler as sqlHandler <<infrastructure>>
+
+User -> router: POST /users
+router -> user_controller: Create(*gin.Context)
+user_controller -> user: User{}
+user --> user_controller:
+user_controller -> user_interactor: Add(domain.User)
+user_interactor -> user_repository: Store(domain.User) \n [depends on I/F]
+user_repository -> sqlHandler: Execute(Insert) \n [depends on I/F]
+sqlHandler -> DB: SQL(INSERT)
+DB --> sqlHandler: Result
+sqlHandler --> user_repository: Result
+user_repository --> user_interactor: LastInsertID
+user_controller --> User: Status 201
+
+
+@endumlpyye
