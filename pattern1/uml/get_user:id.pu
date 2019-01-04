@@ -1,0 +1,25 @@
+@startuml
+
+actor User
+participant router as router <<infrastructure>>
+participant user_controller as user_controller <<interface/controller>>
+participant user_interactor as user_interactor <<usecase>>
+participant user_repository as user_repository <<interface/database>>
+participant user as user <<domain>>
+participant sqlHandler as sqlHandler <<infrastructure>>
+
+User -> router: GET /user:id
+router -> user_controller: Show(*gin.Context)
+user_controller -> user_interactor: UserById(id)
+user_interactor -> user_repository: FindById(id) \n [depends on I/F]
+user_repository -> sqlHandler: Query(Select) \n [depends on I/F]
+sqlHandler -> DB: SQL(SELECT)
+DB --> sqlHandler: rows
+sqlHandler --> user_repository: database.Rows
+user_repository --> user: constructor
+user --> user_repository: domain.User
+user_repository --> user_interactor: domain.User
+user_interactor --> user_controller: domain.User
+user_controller --> User: Status 200, domain.User
+
+@endumlpyye
