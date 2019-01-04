@@ -6,8 +6,14 @@ type UserInteractor struct {
 	UserRepository UserRepository
 }
 
-func (interactor *UserInteractor) Add(u domain.User) (err error) {
-	_, err = interactor.UserRepository.Store(u)
+func (interactor *UserInteractor) Add(u domain.User) (user domain.User, err error) {
+	var identifier int
+	identifier, err = interactor.UserRepository.Store(u)
+	if err != nil {
+		return
+	}
+
+	user, err = interactor.UserRepository.FindById(identifier)
 	return
 }
 
